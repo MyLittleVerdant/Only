@@ -11,3 +11,35 @@
 Форма для совершнеия запроса - /cars  
 Чтобы не использовать js и иметь возможность повтороного запроса без перезагрузки, данные из /cars/available-cars через сессию и редирект передаются в /cars   
 Дамп БД с данными, на которых производилось тестирование - only.sql
+
+***Структура БД***   
+*posts* - справочник должностей:  
+id  
+name
+
+*employees* - сотрудники:  
+id  
+post_id  
+user_id  
+
+*comfort_categories* - категории комфорта:  
+id  
+name  
+
+*post_comfort* - справочник доступных категорий комфорта для должностей:  
+id  
+comfort_category_id  
+post_id  
+
+*cars* - машины:  
+id  
+comfort_category_id  
+model  
+
+*rental_log* - лог аренды:  
+id  
+car_id  
+employee_id  
+rent_from  
+rent_to  
+
