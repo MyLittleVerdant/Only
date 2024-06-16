@@ -35,6 +35,18 @@
         <br><br>
     @endif
 
+    <label for="comfort-category">Comfort Category:</label><br>
+    <select id="comfort-category" name="comfort-category">
+        @foreach($comfortCategories as $category)
+            <option value="{{ $category->id }}">{{ $category->name }}</option>
+        @endforeach
+    </select>
+    @if ($errors->has('comfort-category'))
+        <p class="text-danger">{{ $errors->first('comfort-category') }}</p>
+    @else
+        <br><br>
+    @endif
+
     <button type="submit">Submit</button>
 </form>
 @if (isset($availableCars) && count($availableCars) > 0)

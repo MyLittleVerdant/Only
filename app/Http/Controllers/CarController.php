@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CarRentRequest;
 use App\Http\Services\CarService;
+use App\Models\ComfortCategory;
 use Illuminate\Http\RedirectResponse;
 
 class CarController extends Controller
@@ -16,7 +17,8 @@ class CarController extends Controller
     public function index()
     {
         $availableCars = session('availableCars');
-        return view('cars', ['availableCars' => $availableCars]);
+        $comfortCategories = ComfortCategory::all();
+        return view('cars', ['comfortCategories' => $comfortCategories, 'availableCars' => $availableCars]);
     }
 
     /**
@@ -26,13 +28,13 @@ class CarController extends Controller
      */
     public function showAvailableCars(CarRentRequest $request): \Illuminate\Http\RedirectResponse
     {
-        $employee = $request->getEmployee();
-        $comfortCategories = $employee->post->comfortCategories->pluck('id');
+        $selectedComfortCategories = [$request->input('comfort-category')] ?? $request->getAllowedComfortCategories();
+
         $rentFrom = $request->input('rent_from');
         $rentTo = $request->input('rent_to');
         $model = $request->input('model');
 
-        $availableCars = $this->carService->getAvailableCars($comfortCategories, $rentFrom, $rentTo, $model);
+        $availableCars = $this->carService->getAvailableCars($selectedComfortCategories, $rentFrom, $rentTo, $model);
         return redirect()->route('index')->with('availableCars', $availableCars);
         //        return view('cars', ['availableCars' => $availableCars]);
 
