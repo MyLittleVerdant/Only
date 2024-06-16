@@ -13,9 +13,9 @@ class CarController extends Controller
         $this->carService = new CarService;
     }
 
-    public function index($availableCars = null)
+    public function index()
     {
-        $availableCars = session('availableCars', null);
+        $availableCars = session('availableCars');
         return view('cars', ['availableCars' => $availableCars]);
     }
 
